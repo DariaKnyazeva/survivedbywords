@@ -31,9 +31,9 @@ class Book(models.Model):
     authors = models.ManyToManyField(Author, blank=True)
     publisher = models.ForeignKey(Publisher)
     #disalow null
-    #serial_year = models.IntegerField(null=True)
-    #publication_year = models.IntegerField(null=True)
-    #printed_edition = models.IntegerField(null=True)
+    serial_year = models.IntegerField(blank=True, null=True)
+    publication_year = models.IntegerField(blank=True, null=True)
+    printed_edition = models.IntegerField(blank=True, null=True)
     wikipedia = models.CharField(max_length=255, blank=True)
  
     def __unicode__(self):
