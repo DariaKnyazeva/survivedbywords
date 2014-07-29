@@ -36,7 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'sbw_bookstore'
+    'sbw_bookstore',
+    #'import_export'
 )
 
 MIDDLEWARE_CLASSES = (

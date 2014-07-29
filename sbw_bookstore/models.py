@@ -1,13 +1,14 @@
 from django.db import models
 
 class Publisher(models.Model):
-    name = models.CharField(max_length=30, blank=True)
-    address = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=60, blank=True)
     state_province = models.CharField(max_length=30, blank=True)
     country = models.CharField(max_length=50, blank=True)
     website = models.URLField(blank=True)
-    wikipedia = models.CharField(max_length=255, blank=True)
+    wikipedia = models.URLField(max_length=255, blank=True)
+    notes = models.TextField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
         return self.name
@@ -17,7 +18,8 @@ class Publisher(models.Model):
 
 class Author(models.Model):
     full_name = models.CharField(max_length=255, blank=True, null=True)
-    wikipedia = models.CharField(max_length=255, blank=True)
+    wikipedia = models.URLField(max_length=255, blank=True)
+    notes = models.TextField(max_length=255, blank=True, null=True)
 
     def __unicode__(self):
         return u'%s' % (self.full_name)
@@ -34,8 +36,10 @@ class Book(models.Model):
     first_published = models.IntegerField(blank=True, null=True)
     printed_year = models.IntegerField(blank=True, null=True)
     printed_edition = models.IntegerField(blank=True, null=True)
-    wikipedia = models.CharField(max_length=255, blank=True)
+    wikipedia = models.URLField(max_length=255, blank=True)
     isbn = models.CharField(max_length=13, blank=True, null=True)
+    dewy = models.CharField(max_length=30, blank=True, null=True)
+    notes = models.TextField(max_length=255, blank=True, null=True)
  
     def __unicode__(self):
         return self.title
