@@ -16,8 +16,6 @@ class Publisher(models.Model):
         ordering = ['name']
 
 class Author(models.Model):
-#    first_name = models.CharField(max_length=30, blank=True)
-#    last_name = models.CharField(max_length=40, blank=True)
     full_name = models.CharField(max_length=255, blank=True, null=True)
     wikipedia = models.CharField(max_length=255, blank=True)
 
@@ -28,18 +26,29 @@ class Author(models.Model):
         ordering = ['full_name']
 
 class Book(models.Model):
-    title = models.CharField(max_length=100, blank=True)
+    title = models.CharField(max_length=255, blank=True)
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
     authors = models.ManyToManyField(Author, blank=True)
     publisher = models.ForeignKey(Publisher)
-    #disalow null
     serial_year = models.IntegerField(blank=True, null=True)
     first_published = models.IntegerField(blank=True, null=True)
     printed_year = models.IntegerField(blank=True, null=True)
     printed_edition = models.IntegerField(blank=True, null=True)
     wikipedia = models.CharField(max_length=255, blank=True)
+    isbn = models.CharField(max_length=13, blank=True, null=True)
  
     def __unicode__(self):
         return self.title
 
-    #class Meta:
-    #    ordering = ['publication_year']
+    def get_authors(self):
+        return "\n".join([a.full_name for a in self.authors.all()])
+
+    def get_title(self):
+        if self.subtitle:
+            self.subtitle = " - %s" % self.subtitle  
+        return ("%s %s" % (self.title, self.subtitle))
+
+    get_authors.short_description = 'Authors'
+
+    class Meta:
+        ordering = ['title']
