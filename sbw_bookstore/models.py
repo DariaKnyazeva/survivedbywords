@@ -40,6 +40,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=13, blank=True, null=True)
     dewy = models.CharField(max_length=30, blank=True, null=True)
     notes = models.TextField(max_length=255, blank=True, null=True)
+    signed = models.NullBooleanField(blank=True, null=True, default="Unknown")
  
     def __unicode__(self):
         return self.title
