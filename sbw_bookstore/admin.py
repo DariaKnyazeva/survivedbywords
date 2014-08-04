@@ -1,8 +1,10 @@
 from django.contrib import admin
+from django import forms
+from pyuploadcare.dj import FileField, ImageField, ImageGroupField
 from sbw_bookstore.models import Publisher, Author, Book
+from django.contrib.admin.widgets import AdminFileWidget
 
-
-class AdminImageWidget(forms.FileInput):
+class AdminImageWidget(forms.FileField):
     """
     A ImageField Widget for admin that shows a thumbnail.
     """
@@ -18,7 +20,7 @@ class AdminImageWidget(forms.FileInput):
                            % (value.url, value.url)))
         output.append(super(AdminImageWidget, self).render(name, value, attrs))
         return mark_safe(u''.join(output))
-
+    
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'wikipedia')
@@ -28,6 +30,7 @@ class AuthorAdmin(admin.ModelAdmin):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
+        exclude = ()
     
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
@@ -40,7 +43,6 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'get_authors', 'printed_year')
     search_fields = ('title', 'subtitle', 'printed_year')
     form = BookForm
-    readonly_fields = ('image_tag',)
 
     save_as = True
 
