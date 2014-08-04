@@ -2,3 +2,4 @@
 #*.sqlite3
 *.swp
 *.swo
+.DS_Store

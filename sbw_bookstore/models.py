@@ -41,6 +41,15 @@ class Book(models.Model):
     dewy = models.CharField(max_length=30, blank=True, null=True)
     notes = models.TextField(max_length=255, blank=True, null=True)
     signed = models.NullBooleanField(blank=True, null=True, default="Unknown")
+    front_cover = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    back_cover = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    spine = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    end_pages_front = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    end_pages_back = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    half_title = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    title_page = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+    colophon_page = models.ImageField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
+
  
     def __unicode__(self):
         return self.title

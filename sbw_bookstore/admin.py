@@ -9,6 +9,8 @@ class BookAdmin(admin.ModelAdmin):
     list_display = ('title', 'get_authors', 'printed_year')
     search_fields = ('title', 'subtitle', 'printed_year')
 
+    readonly_fields = ('image_tag',)
+
     save_as = True
 
 admin.site.register(Publisher)
