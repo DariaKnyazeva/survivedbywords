@@ -1,4 +1,12 @@
 from django.db import models
+import uuid
+import os
+import time
+
+def get_file_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = "%s.%s" % (uuid.uuid4(), ext)
+    return os.path.join('photos/' + time.strftime("%Y_%m_%d"), filename)
 
 class Publisher(models.Model):
     name = models.CharField(max_length=255, blank=True)
@@ -41,15 +49,17 @@ class Book(models.Model):
     dewy = models.CharField(max_length=30, blank=True, null=True)
     notes = models.TextField(max_length=255, blank=True, null=True)
     signed = models.NullBooleanField(blank=True, null=True, default="Unknown")
-    front_cover = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    back_cover = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    spine = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    end_pages_front = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    end_pages_back = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    half_title = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    title_page = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-    colophon_page = models.FileField(blank=True, null=True, upload_to='photos/%Y_%m_%d')
-
+    front_cover = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    back_cover = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    spine = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    end_pages_front = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    inscription = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    end_pages_back = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    half_title = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    title_page = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    colophon_page = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    top_view = models.FileField(blank=True, null=True, upload_to=get_file_path)
+    bottom_view = models.FileField(blank=True, null=True, upload_to=get_file_path)
  
     def __unicode__(self):
         return self.title
@@ -66,3 +76,4 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['title']
+
