@@ -3,8 +3,9 @@ from django import forms
 from pyuploadcare.dj import FileField, ImageField, ImageGroupField
 from sbw_bookstore.models import Publisher, Author, Book
 from django.contrib.admin.widgets import AdminFileWidget
+from django.utils.safestring import mark_safe
 
-class AdminImageWidget(forms.FileField):
+class AdminImageWidget(forms.FileInput):
     """
     A ImageField Widget for admin that shows a thumbnail.
     """
@@ -35,7 +36,7 @@ class BookForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(BookForm, self).__init__(*args, **kwargs)
         for _name, field in self.fields.items():
-            if type(field) == forms.ImageField:
+            if type(field) == forms.FileField:
                 field.widget=AdminImageWidget()
 
 
