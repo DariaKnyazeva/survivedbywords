@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'sbw_bookstore',
     'pyuploadcare.dj',
     'rest_framework',
+    'corsheaders',
     #'import_export'
 )
 
@@ -56,7 +57,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'survivedbywords.urls'
 
@@ -106,5 +111,9 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+
+    'PAGINATE_BY': 10
+
+
 }
