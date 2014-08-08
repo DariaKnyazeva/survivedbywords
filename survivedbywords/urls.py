@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.models import User, Group
 from sbw_bookstore.models import Book, Author, Publisher
 from rest_framework import viewsets, routers, serializers
+from django.views.generic.base import TemplateView
 
 admin.autodiscover()
 
@@ -36,7 +37,7 @@ urlpatterns = patterns('',
     #url(r'^$', 'survivedbywords.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^books/$', books),
+    url(r'^books/$', TemplateView.as_view(template_name='api/books.html')),
     url(r'^books/(.+)/$', book),
     url(r'^authors/(.+)/$', authors),
     url(r'^authors/(.+)/$', authors),

@@ -1,0 +1,15 @@
+{% extends 'api/base.html' %}
+
+{% block ng_app %}survivedbywords.app.books{% endblock %}
+
+{% block content %}
+
+{% verbatim %}
+    <div class="panel" ng-repeat="book in books">
+        <div class="panel-heading clearfix">           
+            <h3 class="panel-title">{{ book.title }} ({{ book.subtitle }})</h3>            
+        </div>        
+    </div>
+{% endverbatim %}
+
+{% endblock %}
