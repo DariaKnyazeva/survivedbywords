@@ -18,11 +18,14 @@ app.factory('Author', [
   }
 ]);
 
-app = angular.module ('survivedbywords.app.books', ['ngResource', 'angularUtils.directives.dirPagination']);
 
-app.controller('AppController', function ($scope, $http) {
-    $scope.books = [],
-    $scope.totalBooks = 0,
+app = angular.module ('survivedbywords.api.lists', ['ngResource', 'angularUtils.directives.dirPagination']);
+
+// List controller is used in Book, Publisher and Author list.
+// 'Child' controllers have to override $scope.url
+function ListController($scope, $http, url) {
+    $scope.items = [],
+    $scope.totalItems = 0,
     $scope.numPerPage = 10;  
     getResultsPage(1);
 
@@ -35,14 +38,22 @@ app.controller('AppController', function ($scope, $http) {
     };
 
     function getResultsPage(pageNumber) {
-        $http.get('/booksapi?page=' + pageNumber)
+        $http.get(url + '?page=' + pageNumber)
             .then(function(result) {
-                $scope.books = result.data.results;
-                $scope.totalBooks = result.data.count;
+                $scope.items = result.data.results;
+                $scope.totalItems = result.data.count;
             });
     }
-});
+}
 
+app = angular.module ('survivedbywords.app.books', ['survivedbywords.api.lists']);
+app.controller('AppController', function ($injector, $scope, $http) {
+    $injector.invoke(ListController, this, {
+       $scope: $scope,
+       url: '/booksapi',
+       $http: $http
+    });
+});
 
 app = angular.module('survivedbywords.app.book.editor', ['survivedbywords.api', 'survivedbywords.app.books']);
 
@@ -64,53 +75,21 @@ app.controller('BookEditController', [
 ]);
 
 
-app = angular.module ('survivedbywords.app.authors', ['ngResource', 'angularUtils.directives.dirPagination']);
-
-app.controller('AppController', function ($scope, $http) {
-    $scope.authors = [],
-    $scope.totalAuthors = 0,
-    $scope.numPerPage = 10;  
-    getResultsPage(1);
-
-    $scope.pagination = {
-        current: 1
-    };
-
-    $scope.pageChanged = function(newPage) {
-        getResultsPage(newPage);
-    };
-
-    function getResultsPage(pageNumber) {
-        $http.get('/authorsapi?page=' + pageNumber)
-            .then(function(result) {
-                $scope.authors = result.data.results;
-                $scope.totalAuthors = result.data.count;
-            });
-    }
+app = angular.module ('survivedbywords.app.authors', ['survivedbywords.api.lists']);
+app.controller('AppController', function ($injector, $scope, $http) {
+    $injector.invoke(ListController, this, {
+       $scope: $scope,
+       url: '/authorsapi',
+       $http: $http
+    });
 });
 
 
 app = angular.module ('survivedbywords.app.publishers', ['ngResource', 'angularUtils.directives.dirPagination']);
-
-app.controller('AppController', function ($scope, $http) {
-    $scope.publishers = [],
-    $scope.totalPublishers = 0,
-    $scope.numPerPage = 10;  
-    getResultsPage(1);
-
-    $scope.pagination = {
-        current: 1
-    };
-
-    $scope.pageChanged = function(newPage) {
-        getResultsPage(newPage);
-    };
-
-    function getResultsPage(pageNumber) {
-        $http.get('/publishersapi?page=' + pageNumber)
-            .then(function(result) {
-                $scope.publishers = result.data.results;
-                $scope.totalPublishers = result.data.count;
-            });
-    }
+app.controller('AppController', function ($injector, $scope, $http) {
+    $injector.invoke(ListController, this, {
+       $scope: $scope,
+       url: '/publishersapi',
+       $http: $http
+    });
 });

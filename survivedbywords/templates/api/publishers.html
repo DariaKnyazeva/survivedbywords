@@ -13,7 +13,7 @@
 
 {% verbatim %}
     <table>
-        <tr dir-paginate="publisher in publishers | itemsPerPage: 10" total-items="totalPublishers">
+        <tr dir-paginate="publisher in items | itemsPerPage: 10" total-items="totalItems">
             <td>{{ publisher.name }}</td>
         </tr>
     </table>    

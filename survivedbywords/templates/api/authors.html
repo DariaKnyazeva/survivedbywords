@@ -13,7 +13,7 @@
 
 {% verbatim %}
     <table>
-        <tr dir-paginate="author in authors | itemsPerPage: 10" total-items="totalAuthors">
+        <tr dir-paginate="author in items | itemsPerPage: 10" total-items="totalItems">
             <td>{{ author.full_name }}</td>
             <td><a href="{{ author.wikipedia }}" ng-if="author.wikipedia">Wikipedia</a></td>
         </tr>
