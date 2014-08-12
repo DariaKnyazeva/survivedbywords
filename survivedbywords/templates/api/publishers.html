@@ -1,24 +1,22 @@
 {% extends 'api/base.html' %}
 
-{% block ng_app %}survivedbywords.app.books{% endblock %}
+{% block ng_app %}survivedbywords.app.publishers{% endblock %}
 
 {% block content %}
 
 
 <div class="row">
             <div class="col-xs-4">
-              <h3>Books</h3>
-            </div>            
-            
+              <h3>Publishers</h3>
+            </div>                  
 </div>
 
 {% verbatim %}
     <table>
-        <tr dir-paginate="book in books | itemsPerPage: 10" total-items="totalBooks">
-            <td>{{ book.title }}</td>
+        <tr dir-paginate="publisher in publishers | itemsPerPage: 10" total-items="totalPublishers">
+            <td>{{ publisher.name }}</td>
         </tr>
-    </table>
-    
+    </table>    
 {% endverbatim %}
 
 <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"

@@ -1,0 +1,29 @@
+{% extends 'api/base.html' %}
+
+{% block ng_app %}survivedbywords.app.authors{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+            <div class="col-xs-4">
+              <h3>Authors</h3>
+            </div>                  
+</div>
+
+{% verbatim %}
+    <table>
+        <tr dir-paginate="author in authors | itemsPerPage: 10" total-items="totalAuthors">
+            <td>{{ author.full_name }}</td>
+            <td><a href="{{ author.wikipedia }}" ng-if="author.wikipedia">Wikipedia</a></td>
+        </tr>
+    </table>    
+{% endverbatim %}
+
+<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"
+                             template-url="{% url 'pagination' %}">
+</dir-pagination-controls>
+
+
+
+{% endblock %}
