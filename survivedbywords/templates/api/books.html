@@ -4,12 +4,31 @@
 
 {% block content %}
 
+
+
+<div class="row">
+            <div class="col-xs-4">
+              <h3>Books</h3>
+            </div>            
+            
+</div>
 {% verbatim %}
-    <div class="panel" ng-repeat="book in books">
-        <div class="panel-heading clearfix">           
-            <h3 class="panel-title">{{ book.title }} ({{ book.subtitle }})</h3>            
-        </div>        
-    </div>
+       <table>
+        <tr dir-paginate="book in books | itemsPerPage: 25" total-items="totalBooks">
+            <td>{{ book.title }}</td>
+            
+        </tr>
+    </table>
+
+   
+
+
+    
 {% endverbatim %}
+ <dir-pagination-controls on-page-change="pageChanged(newPageNumber)"
+                             template-url="{% url 'pagination' %}">
+    </dir-pagination-controls>
+
+
 
 {% endblock %}

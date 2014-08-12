@@ -37,6 +37,7 @@ urlpatterns = patterns('',
     #url(r'^$', 'survivedbywords.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^pagin/$', TemplateView.as_view(template_name='api/dirPagination.tpl.html'), name='pagination'),
     url(r'^books/$', TemplateView.as_view(template_name='api/book_edit.html')),
     url(r'^books/(.+)/$', book),
     url(r'^authors/(.+)/$', authors),
