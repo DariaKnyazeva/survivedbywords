@@ -1,0 +1,38 @@
+{% extends 'api/books.html' %}
+
+{% block ng_app %}survivedbywords.app.book.editor{% endblock %}
+
+{% block content %}
+{% verbatim %}
+<div ng-controller="BookEditController">
+    <h5>Create a New Book</h5>
+    <form class="form-inline">
+        <div class="form-group block-level">
+            <input type="text" class="form-control" ng-model="newBook.title" placeholder="Title">
+        </div>
+        <div class="form-group block-level">
+            <input type="text" class="form-control" ng-model="newBook.publisher" placeholder="Publisher">
+        </div>
+        <!-- TODO: other fields -->
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="save()">Add Book</button>
+        </div>
+        <p ng-repeat="(name, errs) in errors" class="alert alert-danger"><strong>{{ name }}</strong>: {{ errs.join(', ') }}</p>
+    </form>
+</div>
+{% endverbatim %}
+{{ block.super }}
+{% endblock %}
+
+{% block js %}
+{{ block.super }}
+<script>
+// Not including a list of dependent modules (2nd parameter to `module`) 
+//"re-opens" the module for additional configuration
+var app = angular.module('survivedbywords.app.book.editor');
+// Add the CSRF Token 
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+}]);
+</script>
+{% endblock %}

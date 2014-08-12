@@ -16,14 +16,5 @@
 <script src="{% static "js/angular.min.js" %}"></script>
 <script src="{% static "js/angular-resource.min.js" %}"></script>
 <script src="{% static "js/script.js" %}"></script>
-<script>	
-	// Not including a list of dependent modules (2nd parameter to `module`) 
-	// "re-opens" the module for additional configuration
-	var app = angular.module('survivedbywords.app.books');
-	// Add the CSRF Token 
-	app.config(['$httpProvider', function($httpProvider) {
-	    $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
-	}]);
-</script>
 </body>
 </html>
