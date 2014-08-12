@@ -35,30 +35,13 @@ app.controller('AppController', function ($scope, $http) {
     };
 
     function getResultsPage(pageNumber) {
-        // this is just an example, in reality this stuff should be in a service
         $http.get('/booksapi?page=' + pageNumber)
             .then(function(result) {
                 $scope.books = result.data.results;
+                console.log(result.data.results);
                 $scope.totalBooks = result.data.count;
             });
     }
-   /*
-    $scope.getBooks = function() {
-      $http.get('/booksapi/').then(function(result) {
-	$scope.totalBooksCount = result.data.count;
-        var numP = Math.ceil($scope.totalBooksCount / $scope.numPerPage);
-        for(var i=1; i<=numP; i++) {      
-	      	$http.get('/booksapi?page=' + i).then(function(result) {
-	      	  return angular.forEach(result.data.results, function(item) {
-	      	     $scope.books.push(item);
-	      	  });
-		 });
-      	}
-      });
-      
-    };
-    $scope.getBooks(); 
-*/
 });
 
 
